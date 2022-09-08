@@ -1,0 +1,158 @@
+/* @font-face {
+    font-family: "NimbusSanl";
+    src:
+     url("../fonts/nimbusSanl/NimbusSanL-Reg.otf") format("truetype"); */
+    /* font-weight: bold; */
+    /* }
+.App {
+    font-family: 'NimbusSanl';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+h1 {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 5px;
+    font-size: 45px;
+}
+
+
+h1 img {
+    width: 55px;
+    height: auto;
+}
+
+
+h2 {
+    font-weight: normal;
+    margin-top: 0px !important;
+    font-size: 35px;
+}
+
+h1 span {
+    margin: 0 10px;
+}
+.kg_info_wrap{
+    margin-bottom: 50px;
+}
+.kg_switch{
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    margin-bottom: 15px;
+} */
+span.kg_digital{
+    top: -1px;
+    position: relative;
+}
+@font-face {
+    font-family: "NimbusSanl";
+    src:
+     url("../fonts/nimbusSanl/NimbusSanL-Reg.otf") format("truetype");
+    /* font-weight: bold; */
+    }
+.App {
+    font-family: 'NimbusSanl';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+h1 {
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0px;
+    font-size: 45px;
+}
+
+
+
+h1 img {
+    width: 63px;
+    height: auto;
+    margin: 0 10px;
+}
+
+
+
+h2 {
+    font-weight: normal;
+    margin-top: 0px !important;
+    font-size: 45px;
+}
+
+
+h1 span {
+    margin: 0 10px 0 0;
+}
+.kg_info_wrap{
+    margin-bottom: 50px;
+}
+
+.kg_switch{
+    /* position: fixed;
+    top: 15px;
+    right: 20px; */
+    margin-bottom: 15px;
+}
+@media only screen and (max-width:767px) {
+    .App{
+        padding: 90px 0;
+    }
+    .App, h1{
+        flex-wrap: wrap;
+    }
+    .App h1 {
+        font-size: 30px;
+        flex-direction: column;
+    }
+    h1 img{
+        /* margin-bottom: 10px; */
+        width: 45px;
+    }
+    h2{
+        font-size: 30px;
+    }
+
+
+}
+.kg_status.close{
+    color: red;
+    font-style: italic;
+}
+.kg_status.open{
+    color: #78a65a;
+    font-style: italic;
+}
+.kg_bell_status{
+    margin-bottom:  0px;
+}
+@media only screen and (max-width:480px){
+    .App h1{
+        font-size: 20px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    h1 img {
+        width: 35px;
+    }
+    .kg_info_wrap {
+    margin-bottom: 40px;
+}
+}
