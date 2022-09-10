@@ -285,7 +285,7 @@ export default function Cdc()
     UKDiff = getTimeDiffrence(CurrentUkTime2, '15:59:59');
     UKDiffChange = UKDiff.split(':');
   } 
-  else if (UsMarketCurrentMins >= UsMarketEndMins || UsMarketCurrentMins < UsMarketStartMins) 
+  else if (UkMarketCurrentMins >= UkMarketEndMins || UkMarketCurrentMins < UkMarketStartMins) 
   {
 
     UKNotification = 'UK MARKETS OPENED!';
