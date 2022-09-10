@@ -107,7 +107,7 @@ export default function Cdc()
 
   if (usDay === 1) 
   {
-    usDay = 'Mons';
+    usDay = 'Mon';
   } 
   else if (usDay === 2)
   {
@@ -115,23 +115,23 @@ export default function Cdc()
   } 
   else if (usDay === 3) 
   {
-    usDay = 'Weds';
+    usDay = 'Wed';
   } 
   else if (usDay === 4) 
   {
-    usDay = 'Thus';
+    usDay = 'Thurs';
   } 
   else if (usDay === 5) 
   {
-    usDay = 'Fris';
+    usDay = 'Fri';
   } 
   else if (usDay === 6) 
   {
-    usDay = 'Sats';
+    usDay = 'Sat';
   } 
   else if (usDay === 7) 
   {
-    usDay = 'Suns';
+    usDay = 'Sun';
   }
   
   let CurrentUsHour = current_date.toLocaleString('en-US', 
@@ -164,6 +164,7 @@ export default function Cdc()
   let UsMarketStartMins = 570;
   let UsMarketEndMins = 960;
   let UsMarketOpenInMins = 90;
+  let UsColon = "";
   let UsMarketCurrentMins = parseInt(CurrentUsHour * 60) + parseInt(CurrentUsMinute);
   if (CurrentUsWeekday == 'Saturday' || CurrentUsWeekday == 'Sunday' || (CurrentUsWeekday == 'Friday' && UsMarketCurrentMins >= UsMarketEndMins)) 
   {
@@ -171,6 +172,7 @@ export default function Cdc()
     USClass = 'close';
     USBellString = '';
     USWeekday = true;
+    UsColon=":";
     USNotification = 'US MARKETS WEEKEND!';
   } 
   else if (UsMarketCurrentMins >= UsMarketStartMins && UsMarketCurrentMins < UsMarketEndMins) 
@@ -181,6 +183,7 @@ export default function Cdc()
     USNotification = 'US MARKETS WII BE OPEN SOON!';
     USDiff = getTimeDiffrence(CurrentUsTime2, '15:59:59');
     USDiffChange = USDiff.split(':');
+    UsColon="";
   } 
   else if (UsMarketCurrentMins >= UsMarketEndMins || UsMarketCurrentMins < UsMarketStartMins) 
   {
@@ -188,6 +191,7 @@ export default function Cdc()
     USClass = 'close';
     USBellString = 'Opening Bell in';
     USNotification = 'US MARKETS OPENED!!';
+    UsColon="";
 
     let usCurrent = CurrentUsTime2.split(':')[0];
     if (parseInt(usCurrent) < 25 && parseInt(usCurrent) > 16) 
@@ -244,24 +248,25 @@ export default function Cdc()
   let ukDay = ukNewDate.getDay();
 
   if (ukDay === 1) {
-    ukDay = 'Mons';
+    ukDay = 'Mon';
   } else if (ukDay === 2) {
     ukDay = 'Tues';
   } else if (ukDay === 3) {
-    ukDay = 'Weds';
+    ukDay = 'Wed';
   } else if (ukDay === 4) {
-    ukDay = 'Thus';
+    ukDay = 'Thurs';
   } else if (ukDay === 5) {
-    ukDay = 'Fris';
+    ukDay = 'Fri';
   } else if (ukDay === 6) {
-    ukDay = 'Sats';
+    ukDay = 'Sat';
   } else if (ukDay === 7) {
-    ukDay = 'Suns';
+    ukDay = 'Sun';
   }
   let UKBack = false;
   let UKMarketString, UKDiff, UKNotification, UKBellString, UKClass;
   let UKDiffChange = [];
   let UKWeekday = false;
+  let UkColon="";
   let UkMarketStartMins = 480;
   let UkMarketEndMins = 960;
   let UkMarketOpenInMins = 0;
@@ -275,6 +280,7 @@ export default function Cdc()
     UKWeekday = true;
     UKBellString = '';
     UKNotification = 'UK MARKETS WEEKEND!';
+    UkColon=":";
   } 
   else if (UkMarketCurrentMins >= UkMarketStartMins && UkMarketCurrentMins < UkMarketEndMins) 
   {
@@ -284,6 +290,7 @@ export default function Cdc()
     UKNotification = 'UK MARKETS WII BE OPEN SOON!!';
     UKDiff = getTimeDiffrence(CurrentUkTime2, '15:59:59');
     UKDiffChange = UKDiff.split(':');
+    UkColon="";
   } 
   else if (UkMarketCurrentMins >= UkMarketEndMins || UkMarketCurrentMins < UkMarketStartMins) 
   {
@@ -292,6 +299,7 @@ export default function Cdc()
     UKMarketString = 'CLOSED';
     UKClass = 'close';
     UKBellString = 'Opening Bell in';
+    UkColon="";
     let ukCurrent = CurrentUkTime2.split(':')[0];
     if (parseInt(ukCurrent) < 25 && parseInt(ukCurrent) > 16) 
     {
@@ -411,7 +419,7 @@ export default function Cdc()
         <h1>
           <span>
             <Flag code="US" />
-            US MARKETS
+            US MARKETS{UsColon}
             <span className={`kg_status ${USClass}`}> {USMarketString}</span>
           </span>
         </h1>
@@ -439,7 +447,7 @@ export default function Cdc()
         <h1>
           <span>
             <Flag code="GB" />
-            UK MARKETS
+            UK MARKETS{UkColon}
             <span className={`kg_status ${UKClass}`}> {UKMarketString}</span>
           </span>
         </h1>
