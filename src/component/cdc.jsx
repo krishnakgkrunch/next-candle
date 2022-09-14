@@ -16,7 +16,7 @@ export default function Cdc()
     CookiesStatus === 'OFF' ? false : true
   );
 
-  let CandleDiffChange, NotificationMsg;
+  let CandleDiffChange;
   let candle = false;
   let finalGranted = false;
   let customNotStatus = true;
@@ -129,7 +129,7 @@ export default function Cdc()
   {
     usDay = 'Sat';
   } 
-  else if (usDay === 7) 
+  else if (usDay === 0) 
   {
     usDay = 'Sun';
   }
@@ -165,6 +165,7 @@ export default function Cdc()
   let UsMarketEndMins = 960;
   let UsMarketOpenInMins = 90;
   let UsColon = "";
+  let USOpen = false;
   let UsMarketCurrentMins = parseInt(CurrentUsHour * 60) + parseInt(CurrentUsMinute);
   if (CurrentUsWeekday == 'Saturday' || CurrentUsWeekday == 'Sunday' || (CurrentUsWeekday == 'Friday' && UsMarketCurrentMins >= UsMarketEndMins)) 
   {
@@ -173,14 +174,14 @@ export default function Cdc()
     USBellString = '';
     USWeekday = true;
     UsColon=":";
-    USNotification = 'US MARKETS WEEKEND!';
+   // USNotification = 'US MARKETS WEEKEND!';
   } 
   else if (UsMarketCurrentMins >= UsMarketStartMins && UsMarketCurrentMins < UsMarketEndMins) 
   {
     USMarketString = 'OPEN';
     USClass = 'open';
     USBellString = 'Closing Bell in';
-    USNotification = 'US MARKETS WII BE OPEN SOON!';
+    //USNotification = 'US MARKETS CLOSED!';
     USDiff = getTimeDiffrence(CurrentUsTime2, '15:59:59');
     USDiffChange = USDiff.split(':');
     UsColon="";
@@ -190,8 +191,9 @@ export default function Cdc()
     USMarketString = 'CLOSED';
     USClass = 'close';
     USBellString = 'Opening Bell in';
-    USNotification = 'US MARKETS OPENED!!';
+    USNotification = 'US MARKETS OPEN!';
     UsColon="";
+    USOpen = true;
 
     let usCurrent = CurrentUsTime2.split(':')[0];
     if (parseInt(usCurrent) < 25 && parseInt(usCurrent) > 16) 
@@ -259,7 +261,7 @@ export default function Cdc()
     ukDay = 'Fri';
   } else if (ukDay === 6) {
     ukDay = 'Sat';
-  } else if (ukDay === 7) {
+  } else if (ukDay === 0) {
     ukDay = 'Sun';
   }
   let UKBack = false;
@@ -267,6 +269,7 @@ export default function Cdc()
   let UKDiffChange = [];
   let UKWeekday = false;
   let UkColon="";
+  let UKOpen = false;
   let UkMarketStartMins = 480;
   let UkMarketEndMins = 960;
   let UkMarketOpenInMins = 0;
@@ -279,7 +282,7 @@ export default function Cdc()
     UKClass = 'close';
     UKWeekday = true;
     UKBellString = '';
-    UKNotification = 'UK MARKETS WEEKEND!';
+    //UKNotification = 'UK MARKETS WEEKEND!';
     UkColon=":";
   } 
   else if (UkMarketCurrentMins >= UkMarketStartMins && UkMarketCurrentMins < UkMarketEndMins) 
@@ -287,7 +290,7 @@ export default function Cdc()
     UKMarketString = 'OPEN';
     UKClass = 'open';
     UKBellString = 'Closing Bell in';
-    UKNotification = 'UK MARKETS WII BE OPEN SOON!!';
+   // UKNotification = 'UK MARKETS CLOSED!';
     UKDiff = getTimeDiffrence(CurrentUkTime2, '15:59:59');
     UKDiffChange = UKDiff.split(':');
     UkColon="";
@@ -295,11 +298,12 @@ export default function Cdc()
   else if (UkMarketCurrentMins >= UkMarketEndMins || UkMarketCurrentMins < UkMarketStartMins) 
   {
 
-    UKNotification = 'UK MARKETS OPENED!';
+    UKNotification = 'UK MARKETS OPEN!';
     UKMarketString = 'CLOSED';
     UKClass = 'close';
     UKBellString = 'Opening Bell in';
     UkColon="";
+    UKOpen = true;
     let ukCurrent = CurrentUkTime2.split(':')[0];
     if (parseInt(ukCurrent) < 25 && parseInt(ukCurrent) > 16) 
     {
@@ -365,22 +369,7 @@ export default function Cdc()
 
   const CurrentUsHourNew = ((parseInt(CurrentUsHour) + 11) % 12) + 1;
   const CurrentUkHourNew = ((parseInt(CurrentUkHour) + 11) % 12) + 1;
-  if (parseInt(CandleDiffChange[0]) === 0 && parseInt(CandleDiffChange[1]) === 0 && parseInt(CandleDiffChange[2]) === 0)
-  {
-    NotificationMsg = 'Candle Changed!!';
-  } 
-  else if (parseInt(USDiffChange[0]) === 0 && parseInt(USDiffChange[1]) === 0 && parseInt(USDiffChange[2]) === 0)
-  {
-    NotificationMsg = USNotification;
-  } 
-  else if (parseInt(UKDiffChange[0]) === 0 && parseInt(UKDiffChange[1]) === 0 && parseInt(UKDiffChange[2]) === 0)
-  {
-    NotificationMsg = UKNotification;
-  } 
-  else if (parseInt(USDiffChange[0]) === 0 && parseInt(USDiffChange[1]) === 0 && parseInt(USDiffChange[2]) === 0 && parseInt(UKDiffChange[0]) === 0 && parseInt(UKDiffChange[1]) === 0 && parseInt(UKDiffChange[2]) === 0) 
-  {
-    NotificationMsg = USNotification + '' + UKNotification;
-  }
+
   if (Notification.permission === 'granted') 
   {
     finalGranted = true;
@@ -478,28 +467,30 @@ export default function Cdc()
           onChange={NotificationChangeHandler}
         ></Switch>
       </div>
-
-      {finalGranted && switchStatus ? (
-        (parseInt(CandleDiffChange[0]) === 0 &&
-          parseInt(CandleDiffChange[1]) === 0 &&
-          parseInt(CandleDiffChange[2]) === 0) ||
+     
+        
+      {(finalGranted && switchStatus && USOpen) ? (
         (parseInt(USDiffChange[0]) === 0 &&
           parseInt(USDiffChange[1]) === 0 &&
-          parseInt(USDiffChange[2]) === 0) ||
-        (parseInt(UKDiffChange[0]) === 0 &&
-          parseInt(UKDiffChange[1]) === 0 &&
-          parseInt(UKDiffChange[2]) === 0) ? (
-          <Notifications msg={NotificationMsg} />
+          parseInt(USDiffChange[2]) === 0) ? (
+          <Notifications msg={USNotification} />
         ) : (
           ''
         )
       ) : (
         ''
       )}
-      {/* <Notifications /> */}
-      {/* <button type="button" ref={myRef}>
-        Click
-      </button> */}
+      {(finalGranted && switchStatus && UKOpen)? (
+         (parseInt(UKDiffChange[0]) === 0 &&
+         parseInt(UKDiffChange[1]) === 0 &&
+         parseInt(UKDiffChange[2]) === 0) ? (
+          <Notifications msg={UKNotification} />
+        ) : (
+          ''
+        )
+      ) : (
+        ''
+      )}
     </div>
   );
 }
